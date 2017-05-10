@@ -9,6 +9,7 @@ class Sentence:
 		self.buffer = []
 		self.arc_gold = {}
 
+	#establish data structure
 	def append_word(self, form, lemma, pos, head, rel):
 		self.form.append(form)
 		self.lemma.append(lemma)
@@ -23,6 +24,7 @@ class Sentence:
 			print ("Words %d-------------" %count)
 			print (' | '.join([form, lemma, pos, head, rel]))
     
+    #oracle parsing
 	def init_configuration(self, form, head):
 		self.stack = [0]
 		self.buffer = list(range(1, len(form)+1))
