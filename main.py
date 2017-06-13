@@ -1,34 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed May 10 10:45:53 2017
+Created on Tue Jun 13 15:24:22 2017
 
 @author: mengruding
 """
 
-from oracle_parsing import Sentence
-import csv
+from IOSen import Reader, Writer
 
-path = 'wsj_train.conll06'
-sentences = []
-count = 0
-with open(path, 'r') as f:
-	lines = csv.reader(f, delimiter='\t')
-	sent = Sentence()
-	for line in lines:
-		if len(line) is 0:
-			sentences.append(sent)
-			sent = Sentence()
-			continue
-		sent.append_word(line[1], line[2], line[3], line[6], line[7])
+##################### read a file and returns sentence objects ################
+read_path = 'wsj_train.conll06'
+read_sentence = Reader(read_path)
+sentences = read_sentence.has_next() #sentences is a list consisting of sentence objects
+#print (sentences[0].form[0])
 
-		#print (sent.print_sentence())
-
-#print (sentences[3].print_sentence())
-#sentences[1].oracle_parsing()
-#print (sentences[3].can_right_arc())
-trans = []
-for sen in sentences:
-	count += 1
-	print ('The %d sentence:' % count)
-	trans.append(sen.oracle_parsing(sen.form, sen.head))
+################### write sentences in a file to do sanity-check ##############
+write_path = 'wsj_write_back'
+write_sentence = Writer(write_path, sentences)
+write_sentence.write()
